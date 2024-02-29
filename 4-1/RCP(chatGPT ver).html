@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>가위바위보 게임</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .choices {
+        margin-bottom: 20px;
+    }
+    .choices button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 5px;
+        font-size: 18px;
+    }
+    .result {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .history-table th, .history-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .history-table th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>가위바위보 게임</h1>
+
+    <div class="choices">
+        <button onclick="playGame('rock')">바위</button>
+        <button onclick="playGame('paper')">보</button>
+        <button onclick="playGame('scissors')">가위</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <table class="history-table" id="history">
+        <thead>
+            <tr>
+                <th>게임 번호</th>
+                <th>당신</th>
+                <th>컴퓨터</th>
+                <th>결과</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="history" id="totalHistory"></div>
+</div>
+
+<script>
+var userWins = 0;
+var computerWins = 0;
+var draws = 0;
+var gameCount = 0;
+
+function playGame(userChoice) {
+    gameCount++;
+    var choices = ["rock", "paper", "scissors"];
+    var computerChoice = choices[Math.floor(Math.random() * choices.length)];
+    
+    var resultText;
+    if (userChoice === computerChoice) {
+        resultText = "비겼습니다!";
+        draws++;
+    } else if (
+        (userChoice === "rock" && computerChoice === "scissors") ||
+        (userChoice === "paper" && computerChoice === "rock") ||
+        (userChoice === "scissors" && computerChoice === "paper")
+    ) {
+        resultText = "당신이 이겼습니다!";
+        userWins++;
+    } else {
+        resultText = "컴퓨터가 이겼습니다!";
+        computerWins++;
+    }
+
+    document.getElementById("result").innerText = "당신: " + userChoice + " vs 컴퓨터: " + computerChoice + "\n" + resultText;
+    updateHistory(userChoice, computerChoice, resultText);
+    updateTotalHistory();
+}
+
+function updateHistory(userChoice, computerChoice, resultText) {
+    var historyTable = document.getElementById("history").getElementsByTagName('tbody')[0];
+    var newRow = historyTable.insertRow(0);
+    var cellIndex = 0;
+    newRow.insertCell(cellIndex++).innerText = gameCount;
+    newRow.insertCell(cellIndex++).innerText = userChoice;
+    newRow.insertCell(cellIndex++).innerText = computerChoice;
+    newRow.insertCell(cellIndex).innerText = resultText;
+}
+
+function updateTotalHistory() {
+    document.getElementById("totalHistory").innerHTML = "전체 전적 - 당신: " + userWins + " 승, 컴퓨터: " + computerWins + " 승, 무승부: " + draws + " 판";
+}
+</script>
+
+</body>
+</html>
+
+

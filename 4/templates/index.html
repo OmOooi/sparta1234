@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위 바위 보 게임</title>
+</head>
+<body>
+    <h1>가위 바위 보 게임</h1>
+    <form method="post" action="/">
+        <label for="user_choice">가위, 바위, 보 중 선택하세요:</label>
+        <select name="user_choice" id="user_choice" required>
+            <option value="가위">가위</option>
+            <option value="바위">바위</option>
+            <option value="보">보</option>
+        </select>
+        <button type="submit">결과 확인</button>
+    </form>
+    {% if result %}
+        <h2>결과: {{ result }}</h2>
+        {% if user_choice %}
+            <p>당신의 선택: {{ user_choice }}</p>
+        {% endif %}
+        {% if computer_choice %}
+            <p>컴퓨터의 선택: {{ computer_choice }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
